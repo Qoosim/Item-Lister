@@ -59,15 +59,15 @@ const form = document.createElement('form');
 form.id = 'addForm';
 form.className = 'form-inline mb-3';
 
-const formInput1 = document.createElement('input');
-formInput1.setAttribute('type', 'text');
-formInput1.id = 'item';
-formInput1.className = 'form-control mr-2'
+const formInput = document.createElement('input');
+formInput.setAttribute('type', 'text');
+formInput.id = 'item';
+formInput.className = 'form-control mr-2'
 
-const formInput2 = document.createElement('input');
-formInput2.setAttribute('type', 'submit');
-formInput2.className = 'btn btn-dark';
-formInput2.setAttribute('value', 'Submit');
+const submitBtn = document.createElement('input');
+submitBtn.setAttribute('type', 'submit');
+submitBtn.className = 'btn btn-dark mt-1';
+submitBtn.setAttribute('value', 'Submit');
 
 const new_h2 = document.createElement('h2');
 new_h2.className = 'title';
@@ -78,8 +78,8 @@ ul.id = 'items';
 ul.className = 'list-group';
 
 
-form.appendChild(formInput1);
-form.appendChild(formInput2);
+form.appendChild(formInput);
+form.appendChild(submitBtn);
 card.appendChild(h2);
 card.appendChild(form);
 card.appendChild(new_h2);
@@ -92,4 +92,23 @@ overallContainer.appendChild(bodyContainer);
 body.insertBefore(overallContainer, script);
 
 
+// Logic to add items
 
+submitBtn.addEventListener('click', addItem);
+
+function addItem(e) {
+    e.preventDefault();
+    
+    if(formInput.value === '') {
+        return;
+    } else {
+        const textInput = formInput.value;
+        formInput.value = '';
+        
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.innerHTML = `${textInput} <button class="btn btn-danger btn-sm float-end delete">X</button>`;
+
+        ul.appendChild(li);
+    }
+}
