@@ -95,6 +95,8 @@ body.insertBefore(overallContainer, script);
 // Logic to add items
 
 submitBtn.addEventListener('click', addItem);
+ul.addEventListener('click', removeItem);
+
 
 function addItem(e) {
     e.preventDefault();
@@ -110,5 +112,12 @@ function addItem(e) {
         li.innerHTML = `${textInput} <button class="btn btn-danger btn-sm float-end delete">X</button>`;
 
         ul.appendChild(li);
+    }
+}
+
+function removeItem(e) {
+    if(e.target.classList.contains('delete')) {
+        const child = e.target.parentElement;
+        ul.removeChild(child);
     }
 }
