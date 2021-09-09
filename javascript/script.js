@@ -29,13 +29,13 @@ row.appendChild(firstColumn);
 const secondColumn = document.createElement('div');
 secondColumn.className = 'col-md-6 align-self-center';
 
-const input = document.createElement('input');
-input.setAttribute('type', 'text');
-input.className = 'form-control';
-input.id = 'filter';
-input.setAttribute('placeholder', 'Search Items...');
+const searchInput = document.createElement('input');
+searchInput.setAttribute('type', 'text');
+searchInput.className = 'form-control';
+searchInput.id = 'filter';
+searchInput.setAttribute('placeholder', 'Search Items...');
 
-secondColumn.appendChild(input);
+secondColumn.appendChild(searchInput);
 row.appendChild(secondColumn);
 
 headerContainer.appendChild(row)
@@ -92,10 +92,11 @@ overallContainer.appendChild(bodyContainer);
 body.insertBefore(overallContainer, script);
 
 
-// Logic to add items
+// Logic
 
 submitBtn.addEventListener('click', addItem);
 ul.addEventListener('click', removeItem);
+searchInput.addEventListener('keyup', filterItem);
 
 
 function addItem(e) {
@@ -117,7 +118,23 @@ function addItem(e) {
 
 function removeItem(e) {
     if(e.target.classList.contains('delete')) {
-        const child = e.target.parentElement;
-        ul.removeChild(child);
+        const item = e.target.parentElement;
+        ul.removeChild(item);
     }
 }
+
+function filterItem(e) {
+    const text = e.target.value.toLowerCase();
+    // Get list of items
+    const items = document.getElementsByTagName('li');
+    // Convert to an array
+    Array.from(items).forEach(function(item) {
+        const itemName = item.firstChild.textContent.toLowerCase();
+        if(itemName.indexOf(text) !== -1) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    })
+}
+
